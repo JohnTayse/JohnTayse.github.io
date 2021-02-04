@@ -44,14 +44,16 @@ function calculate(){
 
 	var units = $("input:radio[name=units]:checked'").val();
 	if(units === "imperial"){
-		var inches = $('#inches').val();
-		inches += $('#feet').val() * 12;
+		var inches = $('#inches').val() * 1;
+		var feetInInches = $('#feet').val() * 12;
+		inches += feetInInches;
 		
 		result = (inches / scale).toFixed(3) + " in";
 	}
 	else if(units === "metric"){
-		var centimeters = $('#centimeters').val();
-		centimeters += $('#meters').val() * 100;
+		var centimeters = $('#centimeters').val() * 1;
+		var metersInCm = $('#meters').val() * 100;
+		centimeters += metersInCm;
 		
 		result = (centimeters / scale).toFixed(3) + " cm";
 	}
