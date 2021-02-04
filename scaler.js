@@ -1,3 +1,5 @@
+var favoriteScale = "";
+
 $(document).ready(function(){
 	$('input[type=radio][name=units]').change(function(){
 		var units = $("input:radio[name=units]:checked'").val();
@@ -19,6 +21,32 @@ $(document).ready(function(){
 		else {
 			$('#custom').hide();
 		}
+
+		if(scale == favoriteScale){
+			$('#favorite').html('&#9733');
+		}
+		else {
+			$('#favorite').html('&#9734');
+		}
+	})
+
+	$('#favorite').click(function(){
+		var scale = $('#scale').val();
+		if(scale === "custom"){
+			scale = $('#customScale').val();
+		}
+
+		if(scale == favoriteScale){
+			//un-favorite
+			localStorage.setItem('favorite', '');
+			favoriteScale = "";
+			$('#favorite').html('&#9734');
+		}
+		else {
+			localStorage.setItem('favorite', scale);
+			favoriteScale = scale;
+			$('#favorite').html('&#9733');
+		}
 	})
 
 	$('#calculate').click(function(){
@@ -32,6 +60,22 @@ $(document).ready(function(){
 		$('#centimeters').val('');
 		$('#result').text('');
 	})
+
+	if(typeof(Storage) !== undefined){
+		var favorite = localStorage.getItem('favorite');
+		if(favorite !== null && favorite != ''){
+			$('#scale').val(favorite);
+			if($('#scale').val() != favorite){
+				$('#scale').val('custom');
+				$('#custom').show();
+				$('#customScale').val(favorite);
+			}
+			favoriteScale = favorite;
+			$('#favorite').html('&#9733');
+		}
+	} else {
+		$('#favorite').remove();
+	}
 })
 
 function calculate(){
