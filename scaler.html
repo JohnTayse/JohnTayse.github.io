@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>Scaler</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+		<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js'></script>
+		<script type="text/javascript" src="scaler.js"></script>
+	</head>
+<body>
+	<div class="container">
+		<h1>Scaler</h1>
+		<h4>Scale any measurement from prototype to model scale</h4>
+		<form id="scaleParameters">
+			<label>
+				<span>Units</span>
+			</label>
+				<Input type="radio" name="units" value="imperial" checked>Imperial
+				<Input type="radio" name="units" value="metric">Metric
+			<br/><br/>
+			<div class="form-group">
+				<label>
+					<span>Scale</span>
+				</label>
+				<select id="scale" style="width:30%">  
+					<option value="12">1" (1:12)</option>
+					<option value="22.5">G (1:22.5)</option>
+					<option value="24">1/2" (1:24)</option>
+					<option value="29">G (1:29)</option>
+					<option value="32">G/One (1:32)</option>
+					<option value="43.5">O UK (1:43.5)</option>
+					<option value="45">O Europe (1:45)</option>
+					<option value="48">O US (1:48)</option>
+					<option value="64">S (1:64)</option>
+					<option value="76.2">OO (1:76.2)</option>
+					<option value="87">HO (1:87)</option>
+					<option value="120">TT (1:120)</option>
+					<option value="160">N (1:160)</option>
+					<option value="220">Z (1:220)</option>
+					<option value="480">T (1:480)</option>
+					<option value="custom">Custom</option>
+				</select>
+			</div>
+			<div id="custom" style="display: none;">
+				<br/>
+				<label>
+					<span>Custom</span>
+					1:&nbsp;<input type="text"  id="customScale"  value="1">
+				</label>
+			</div>
+			<br/>
+			<div id="imperialInputs">
+				<span>Feet</span>
+				<input type="text"  id="feet"  value="">
+				<span>Inches</span>
+				<input type="text"  id="inches"  value="">
+			</div>
+			<div id="metricInputs" style="display: none;">
+				<span>Meters</span>
+				<input type="text"  id="meters"  value="">
+				<span>Centimeters</span>
+				<input type="text"  id="centimeters"  value="">
+			</div>
+			<br/><br/>
+			<button type="button" class="btn btn-primary" id="calculate">Calculate</button>
+			<button type="button" class="btn btn-primary" id="clear">Clear</button>
+			<br/><br/>
+			<p id="result"></p>
+		</form>
+	</div>
+</body>
+</html>
