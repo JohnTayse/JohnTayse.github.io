@@ -10,22 +10,22 @@
 		<script type="text/javascript" src="scaler.js"></script>
 	</head>
 	<style>
-		h1 {color: white}
-		h4 {color: white}
+		h2 {color: white}
+		em {color: white}
 		p {color: white}
 		span {color: white}
 		form {color: white}
 	</style>
 <body class="bg-dark">
 	<div class="container">
-		<h1>Scaler</h1>
-		<h4>Scale any measurement from prototype to model scale</h4>
+		<h2>Scaler</h2>
+		<em>Scale any measurement from prototype to model scale</em>
 		<form id="scaleParameters">
 			<label>
 				<span>Units</span>
 			</label>
-				<Input type="radio" name="units" value="imperial" checked>Imperial
-				<Input type="radio" name="units" value="metric">Metric
+				<Input type="radio" name="units" value="imperial" checked>&nbsp;Imperial
+				<Input type="radio" name="units" value="metric">&nbsp;Metric
 			<br/><br/>
 			<div class="form-group">
 				<label>
@@ -52,25 +52,24 @@
 				<button type="button" class="btn btn-secondary" id="favorite">&#9734</button>
 			</div>
 			<div id="custom" style="display: none;">
-				<br/>
 				<label>
 					<span>Custom</span>
-					1:&nbsp;<input type="text"  id="customScale"  value="1">
+					1:&nbsp;<input type="number"  id="customScale"  value="1">
 				</label>
 			</div>
 			<br/>
 			<span>Prototype Measurement</span>
 			<div id="imperialInputs">
 				<span>Feet</span>
-				<input type="text"  id="feet"  value=""><br/>
+				<input type="number"  id="feet"  value=""><br/>
 				<span>Inches</span>
-				<input type="text"  id="inches"  value="">
+				<input type="number"  id="inches"  value="">
 			</div>
 			<div id="metricInputs" style="display: none;">
 				<span>Meters</span>
-				<input type="text"  id="meters"  value=""><br/>
+				<input type="number"  id="meters"  value=""><br/>
 				<span>Centimeters</span>
-				<input type="text"  id="centimeters"  value="">
+				<input type="number"  id="centimeters"  value="">
 			</div>
 			<br/>
 			<span>Scale Measurement</span>
