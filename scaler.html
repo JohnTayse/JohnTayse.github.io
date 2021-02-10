@@ -9,7 +9,14 @@
 		<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js'></script>
 		<script type="text/javascript" src="scaler.js"></script>
 	</head>
-<body>
+	<style>
+		h1 {color: white}
+		h4 {color: white}
+		p {color: white}
+		span {color: white}
+		form {color: white}
+	</style>
+<body class="bg-dark">
 	<div class="container">
 		<h1>Scaler</h1>
 		<h4>Scale any measurement from prototype to model scale</h4>
@@ -42,7 +49,7 @@
 					<option value="480">T (1:480)</option>
 					<option value="custom">Custom</option>
 				</select>
-				<button type="button" class="btn btn-primary" id="favorite">&#9734</button>
+				<button type="button" class="btn btn-secondary" id="favorite">&#9734</button>
 			</div>
 			<div id="custom" style="display: none;">
 				<br/>
@@ -52,6 +59,7 @@
 				</label>
 			</div>
 			<br/>
+			<span>Prototype Measurement</span>
 			<div id="imperialInputs">
 				<span>Feet</span>
 				<input type="text"  id="feet"  value=""><br/>
@@ -64,11 +72,10 @@
 				<span>Centimeters</span>
 				<input type="text"  id="centimeters"  value="">
 			</div>
-			<br/><br/>
-			<button type="button" class="btn btn-primary" id="calculate">Calculate</button>
-			<button type="button" class="btn btn-primary" id="clear">Clear</button>
-			<br/><br/>
-			<p id="result"></p>
+			<br/>
+			<span>Scale Measurement</span>
+			<p id="result">0 in</p>
+			<button type="button" class="btn btn-secondary" id="clear">Clear</button>
 		</form>
 	</div>
 </body>

@@ -11,6 +11,8 @@ $(document).ready(function(){
 			$('#imperialInputs').hide();
 			$('#metricInputs').show();
 		}
+
+		clear();
 	})
 
 	$('#scale').change(function(){
@@ -49,16 +51,21 @@ $(document).ready(function(){
 		}
 	})
 
-	$('#calculate').click(function(){
+	$('#feet').keyup(function(){
+		calculate();
+	})
+	$('#inches').keyup(function(){
+		calculate();
+	})
+	$('#meters').keyup(function(){
+		calculate();
+	})
+	$('#centimeters').keyup(function(){
 		calculate();
 	})
 
 	$('#clear').click(function(){
-		$('#feet').val('');
-		$('#inches').val('');
-		$('#meters').val('');
-		$('#centimeters').val('');
-		$('#result').text('');
+		clear();
 	})
 
 	if(typeof(Storage) !== undefined){
@@ -78,6 +85,21 @@ $(document).ready(function(){
 	}
 })
 
+function clear(){
+	$('#feet').val('');
+	$('#inches').val('');
+	$('#meters').val('');
+	$('#centimeters').val('');
+
+	var units = $("input:radio[name=units]:checked'").val();
+	if(units === "imperial"){
+		$('#result').html('0 in');
+	}
+	else if(units === "metric"){
+		$('#result').html('0 cm');
+	}
+}
+
 function calculate(){
 	var scale = $('#scale').val();
 	if(scale === "custom"){
@@ -91,15 +113,27 @@ function calculate(){
 		var inches = $('#inches').val() * 1;
 		var feetInInches = $('#feet').val() * 12;
 		inches += feetInInches;
+
+		var value = (inches / scale).toFixed(3);
+
+		if(value == 0){
+			value = "0";
+		}
 		
-		result = (inches / scale).toFixed(3) + " in";
+		result = value + " in";
 	}
 	else if(units === "metric"){
 		var centimeters = $('#centimeters').val() * 1;
 		var metersInCm = $('#meters').val() * 100;
 		centimeters += metersInCm;
+
+		var value = (centimeters / scale).toFixed(3);
+
+		if(value == 0){
+			value = "0";
+		}
 		
-		result = (centimeters / scale).toFixed(3) + " cm";
+		result = value + " cm";
 	}
 
 	$('#result').text(result);
