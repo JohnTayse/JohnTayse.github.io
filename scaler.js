@@ -30,6 +30,8 @@ $(document).ready(function(){
 		else {
 			$('#favorite').html('&#9734');
 		}
+
+		calculate();
 	})
 
 	$('#favorite').click(function(){
