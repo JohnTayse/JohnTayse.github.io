@@ -4,6 +4,8 @@
 
 - Slide Ruler: https://johntayse.github.io/SlideRuler/
 
+- Bricks Ballast Plates: https://johntayse.github.io/BricksBallastPlates/
+
 - Just Try DIY Podcast: https://johntayse.github.io/JustTryDIYPodcast/
 
 - Scaler: https://johntayse.github.io/scaler.html
