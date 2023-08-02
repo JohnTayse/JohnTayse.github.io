@@ -94,12 +94,8 @@ function clear(){
 	$('#centimeters').val('');
 
 	var units = $("input:radio[name=units]:checked'").val();
-	if(units === "imperial"){
-		$('#result').html('0 in');
-	}
-	else if(units === "metric"){
-		$('#result').html('0 cm');
-	}
+	$('#resultImperial').html('0 in');
+	$('#resultMetric').html('0 mm');
 }
 
 function calculate(){
@@ -108,7 +104,8 @@ function calculate(){
 		scale = $('#customScale').val()
 	}
 
-	var result = "";
+	var resultImperial = "";
+	var resultMetric = "";
 
 	var units = $("input:radio[name=units]:checked'").val();
 	if(units === "imperial"){
@@ -120,9 +117,14 @@ function calculate(){
 
 		if(value == 0){
 			value = "0";
+			resultMetric = "0 mm";
+		}
+		else{
+			var valueMetric = value * 25.4;
+			resultMetric = valueMetric + " mm";
 		}
 		
-		result = value + " in";
+		resultImperial = value + " in";
 	}
 	else if(units === "metric"){
 		var centimeters = $('#centimeters').val() * 1;
@@ -130,13 +132,21 @@ function calculate(){
 		centimeters += metersInCm;
 
 		var value = (centimeters / scale).toFixed(3);
+		var centimetersInMm = value * 10;
 
 		if(value == 0){
 			value = "0";
+			resultImperial = "0 in";
+		}
+		else{
+			value = centimetersInMm;
+			var valueImperial = centimetersInMm / 25.4;
+			resultImperial = valueImperial + " in";
 		}
 		
-		result = value + " cm";
+		resultMetric = value + " mm";
 	}
 
-	$('#result').text(result);
+	$('#resultImperial').text(resultImperial);
+	$('#resultMetric').text(resultMetric);
 }
