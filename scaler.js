@@ -1,6 +1,32 @@
-var favoriteScale = "";
+var fromFavoriteScale = "";
+var toFavoriteScale = "";
+var scales = {
+	'1': 'Prototype (1:1)',
+	'12' : '1" (1:12)',
+	'22.5' : 'G (1:22.5)',
+	'24' : '1/2" (1:24)',
+	'29' : 'G (1:29)',
+	'32' : 'G/One (1:32)',
+	'43.5' : 'O UK (1:43.5)',
+	'45' : 'O Europe (1:45)',
+	'48' : 'O US (1:48)',
+	'64' : 'S (1:64)',
+	'76.2' : 'OO (1:76.2)',
+	'87' : 'HO (1:87)',
+	'120' : 'TT (1:120)',
+	'160' : 'N (1:160)',
+	'220' : 'Z (1:220)',
+	'480' : 'T (1:480)',
+	'custom' : 'Custom',
+}
 
 $(document).ready(function(){
+	for (var scale in scales) {
+		var option = '<option value="' + scale + '">' + scales[scale] + '</option>';
+		$('#fromScale').append(option);
+		$('#toScale').append(option);
+	}
+
 	$('input[type=radio][name=units]').change(function(){
 		var units = $("input:radio[name=units]:checked'").val();
 		if(units === "imperial"){
@@ -15,41 +41,74 @@ $(document).ready(function(){
 		clear();
 	})
 
-	$('#scale').change(function(){
-		var scale = $('#scale').val();
-		if(scale === "custom"){
-			$('#custom').show();
+	$('.scaleSelect').change(function(){
+		var fromScale = $('#fromScale').val();
+		var toScale = $('#toScale').val();
+		
+		if(fromScale === "custom"){
+			$('#fromCustom').show();
 		}
 		else {
-			$('#custom').hide();
+			$('#fromCustom').hide();
+		}
+		if(toScale === "custom"){
+			$('#toCustom').show();
+		}
+		else {
+			$('#toCustom').hide();
 		}
 
-		if(scale == favoriteScale){
-			$('#favorite').html('&#9733');
+		if(fromScale == fromFavoriteScale){
+			$('#fromFavorite').html('&#9733');
 		}
 		else {
-			$('#favorite').html('&#9734');
+			$('#fromFavorite').html('&#9734');
+		}
+		if(toScale == toFavoriteScale){
+			$('#toFavorite').html('&#9733');
+		}
+		else {
+			$('#toFavorite').html('&#9734');
 		}
 
 		calculate();
 	})
 
-	$('#favorite').click(function(){
-		var scale = $('#scale').val();
+	$('#fromFavorite').click(function(){
+		var scale = $('#fromScale').val();
 		if(scale === "custom"){
-			scale = $('#customScale').val();
+			scale = $('#fromCustomScale').val();
 		}
 
-		if(scale == favoriteScale){
+		if(scale == fromFavoriteScale){
 			//un-favorite
-			localStorage.setItem('favorite', '');
-			favoriteScale = "";
-			$('#favorite').html('&#9734');
+			localStorage.setItem('fromFavorite', '');
+			fromFavoriteScale = "";
+			$('#fromFavorite').html('&#9734');
 		}
 		else {
-			localStorage.setItem('favorite', scale);
-			favoriteScale = scale;
-			$('#favorite').html('&#9733');
+			localStorage.setItem('fromFavorite', scale);
+			fromFavoriteScale = scale;
+			$('#fromFavorite').html('&#9733');
+		}
+	})
+
+	$('#toFavorite').click(function(){
+		var scale = $('#toScale').val();
+		if(scale === "custom"){
+			scale = $('#toCustomScale').val();
+		}
+
+		if(scale == toFavoriteScale){
+			//un-favorite
+			localStorage.setItem('toFavorite', '');
+			toFavoriteScale = "";
+			$('#toFavorite').html('&#9734');
+		}
+		else {
+			localStorage.setItem('toFavorite', scale);
+			toFavoriteScale = scale;
+			$('#toFavorite').html('&#9733');
 		}
 	})
 
@@ -71,19 +130,31 @@ $(document).ready(function(){
 	})
 
 	if(typeof(Storage) !== undefined){
-		var favorite = localStorage.getItem('favorite');
-		if(favorite !== null && favorite != ''){
-			$('#scale').val(favorite);
-			if($('#scale').val() != favorite){
-				$('#scale').val('custom');
-				$('#custom').show();
-				$('#customScale').val(favorite);
+		var fromFavorite = localStorage.getItem('fromFavorite');
+		var toFavorite = localStorage.getItem('toFavorite');
+		if(fromFavorite !== null && fromFavorite != ''){
+			$('#fromScale').val(fromFavorite);
+			if($('#fromScale').val() != fromFavorite){
+				$('#fromScale').val('custom');
+				$('#fromCustom').show();
+				$('#fromCustomScale').val(fromFavorite);
 			}
-			favoriteScale = favorite;
-			$('#favorite').html('&#9733');
+			fromFavoriteScale = fromFavorite;
+			$('#fromFavorite').html('&#9733');
+		}
+		if(toFavorite !== null && toFavorite != ''){
+			$('#toScale').val(toFavorite);
+			if($('#toScale').val() != toFavorite){
+				$('#toScale').val('custom');
+				$('#toCustom').show();
+				$('#toCustomScale').val(toFavorite);
+			}
+			toFavoriteScale = toFavorite;
+			$('#toFavorite').html('&#9733');
 		}
 	} else {
-		$('#favorite').remove();
+		$('#fromFavorite').remove();
+		$('#toFavorite').remove();
 	}
 })
 
@@ -99,9 +170,13 @@ function clear(){
 }
 
 function calculate(){
-	var scale = $('#scale').val();
-	if(scale === "custom"){
-		scale = $('#customScale').val()
+	var fromScale = $('#fromScale').val();
+	var toScale = $('#toScale').val();
+	if(fromScale === "custom"){
+		fromScale = $('#fromCustomScale').val()
+	}
+	if(toScale === "custom"){
+		toScale = $('#toCustomScale').val()
 	}
 
 	var resultImperial = "";
@@ -113,25 +188,32 @@ function calculate(){
 		var feetInInches = $('#feet').val() * 12;
 		inches += feetInInches;
 
-		var value = (inches / scale).toFixed(3);
+		var value = (inches * (fromScale / toScale)).toFixed(3);
 
 		if(value == 0){
 			value = "0";
 			resultMetric = "0 mm";
 		}
 		else{
-			var valueMetric = value * 25.4;
+			var valueMetric = (value * 25.4).toFixed(3);
 			resultMetric = valueMetric + " mm";
 		}
-		
-		resultImperial = value + " in";
+
+		if(value > 60){
+			var valueFeet = Math.floor(value / 12);
+			var valueInches = (value % 12).toFixed(3);
+			resultImperial = valueFeet + "' " + valueInches + '"';
+		}
+		else{
+			resultImperial = value + " in";
+		}
 	}
 	else if(units === "metric"){
 		var centimeters = $('#centimeters').val() * 1;
 		var metersInCm = $('#meters').val() * 100;
 		centimeters += metersInCm;
 
-		var value = (centimeters / scale).toFixed(3);
+		var value = (centimeters * (fromScale / toScale)).toFixed(3);
 		var centimetersInMm = value * 10;
 
 		if(value == 0){
@@ -140,8 +222,15 @@ function calculate(){
 		}
 		else{
 			value = centimetersInMm;
-			var valueImperial = centimetersInMm / 25.4;
-			resultImperial = valueImperial + " in";
+			var valueImperial = (centimetersInMm / 25.4).toFixed(3);
+			if(valueImperial > 60){
+				var valueFeet = Math.floor(valueImperial / 12);
+				var valueInches = (valueImperial % 12).toFixed(3);
+				resultImperial = valueFeet + "' " + valueInches + '"';
+			}
+			else{
+				resultImperial = valueImperial + " in";
+			}
 		}
 		
 		resultMetric = value + " mm";
