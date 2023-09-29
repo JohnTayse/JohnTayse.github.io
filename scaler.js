@@ -121,7 +121,7 @@ $(document).ready(function(){
 	$('#meters').keyup(function(){
 		calculate();
 	})
-	$('#centimeters').keyup(function(){
+	$('#millimeters').keyup(function(){
 		calculate();
 	})
 
@@ -162,7 +162,7 @@ function clear(){
 	$('#feet').val('');
 	$('#inches').val('');
 	$('#meters').val('');
-	$('#centimeters').val('');
+	$('#millimeters').val('');
 
 	var units = $("input:radio[name=units]:checked'").val();
 	$('#resultImperial').html('0 in');
@@ -209,20 +209,18 @@ function calculate(){
 		}
 	}
 	else if(units === "metric"){
-		var centimeters = $('#centimeters').val() * 1;
-		var metersInCm = $('#meters').val() * 100;
-		centimeters += metersInCm;
+		var millimeters = $('#millimeters').val();
+		var metersInMm = $('#meters').val() * 1000;
+		millimeters += metersInMm;
 
-		var value = (centimeters * (fromScale / toScale)).toFixed(3);
-		var centimetersInMm = value * 10;
+		var value = (millimeters * (fromScale / toScale)).toFixed(3);
 
 		if(value == 0){
 			value = "0";
 			resultImperial = "0 in";
 		}
 		else{
-			value = centimetersInMm;
-			var valueImperial = (centimetersInMm / 25.4).toFixed(3);
+			var valueImperial = (value / 25.4).toFixed(3);
 			if(valueImperial > 60){
 				var valueFeet = Math.floor(valueImperial / 12);
 				var valueInches = (valueImperial % 12).toFixed(3);
