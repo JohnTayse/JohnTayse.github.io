@@ -4,6 +4,8 @@
 
 - Slide Ruler: https://johntayse.github.io/SlideRuler/
 
+- Decision Matrix: https://johntayse.github.io/decision-matrix.html
+
 - Bricks Ballast Plates: https://johntayse.github.io/BricksBallastPlates/
 
 - Just Try DIY Podcast: https://johntayse.github.io/JustTryDIYPodcast/
