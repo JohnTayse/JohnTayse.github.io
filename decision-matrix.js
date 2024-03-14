@@ -133,15 +133,20 @@ function showOptions(){
 			var span = optionCount - i;
 			matrix += '<tr>';
 			for(j = 0; j < i; j++){
-				matrix += '<td>';
 				var compare = options[j];
 				var choiceIndex = rankedList.findIndex(x => (x.chosen == task && x.notChosen == compare)
 					|| (x.chosen == compare && x.notChosen == task));
 				if(choiceIndex > -1){
-					var displayLetter = alphabet[options.indexOf(rankedList[choiceIndex].chosen)];
+					var choice = rankedList[choiceIndex];
+					var displayLetter = alphabet[options.indexOf(choice.chosen)];
+					matrix += '<td chosen="' + choice.chosen + '" notChosen="' + choice.notChosen + '" class="choice">';
 					matrix += displayLetter;
+					matrix += '</td>';
 				}
-				matrix += '</td>';
+				else{
+					matrix += '<td></td>';
+				}
+				
 			}
 			matrix += '<td class="alpha">' + alpha + '</td>';
 			matrix += '<td colspan="' + span + '">' + task + '&nbsp;';
@@ -180,6 +185,20 @@ function showOptions(){
 			showOptions();
 		})
 
+		$('.choice').click(function(){
+			var chosen = this.getAttribute("chosen");
+			var notChosen = this.getAttribute("notChosen");
+			if(confirm('Switch choice "' + chosen + '" for "' + notChosen + '"?')){
+				var choiceIndex = rankedList.findIndex(x => (x.chosen == chosen && x.notChosen == notChosen));
+				rankedList[choiceIndex] = {
+					"chosen": notChosen,
+					"notChosen": chosen
+				};
+				showOptions();
+			}
+
+		})
+
 		if(optionCount > 1){
 			$('.functionButton').prop("disabled", false);
 		}
@@ -202,7 +221,7 @@ function showOptions(){
 function compare(option1Index, option2Index){
 	var compare = '';
 	compare += '<button type="button" class="btn btn-info" id="option1" index="' + option1Index + '">' + options[option1Index] + '</button>';
-	compare += ' or ';
+	compare += ' or<br/>';
 	compare += '<button type="button" class="btn btn-light" id="option2" index="' + option2Index + '">' + options[option2Index] + '</button>';
 	compare += '?';
 
