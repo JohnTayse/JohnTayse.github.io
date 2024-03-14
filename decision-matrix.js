@@ -37,8 +37,22 @@ $(document).ready(function(){
 		$('#compare').modal('hide');
 	})
 
+	$('#btnImport').click(function(){
+		$('#import').modal('show');
+	})
+
+	$('#btnModalImport').click(function(){
+		importItems();
+		$('#import').modal('hide');
+	})
+	
+	$('#btnModalCancelImport').click(function(){
+		$('#itemsInput').val('');
+		$('#import').modal('hide');
+	})
+
 	$(document).on('keypress',function(e) {
-		if(e.which == 13) {
+		if(e.which == 13 && $('#decision').val() != '') {
 			addOption();
 		}
 	});
@@ -48,17 +62,40 @@ function addOption(){
 	var decision = $('#decision').val();
 
 	if(options.find(x => x.toUpperCase() == decision.toUpperCase()) == undefined){
+		if(options.length == alphabet.length){
+			addLetter();
+		}
 		options.push(decision);
 		rankedList = [];
 		$('#decision').val('');
-		if(options.length == alphabet.length){
-			$('#btnAdd').prop('disabled', true);
-		}
 		showOptions();
 	}
 	else{
 		alert('Already added!');
 	}
+}
+
+function importItems(){
+	var lines = $('#itemsInput').val().split('\n');
+	lines.forEach(item => {
+		if(options.length == alphabet.length){
+			addLetter();
+		}
+		if(options.find(x => x.toUpperCase() == item.toUpperCase()) == undefined){
+			options.push(item);
+			rankedList = [];
+		}
+	})
+	$('#itemsInput').val('');
+	showOptions();
+}
+
+function addLetter(){
+	var grouping = Math.floor(alphabet.length / 26);
+	var letter = alphabet.length % 26;
+
+	var nextLetter = alphabet[grouping - 1] + '' + alphabet[letter];
+	alphabet.push(nextLetter);
 }
 
 function checkForSaved(){
@@ -70,6 +107,12 @@ function checkForSaved(){
 		}
 		if(savedRankedList !== null && savedRankedList != ''){
 			rankedList = savedRankedList;
+		}
+	}
+	if(options.length > alphabet.length){
+		var toAddCount = options.length - alphabet.length;
+		for(var i = 0; i < toAddCount; i++){
+			addLetter();
 		}
 	}
 	showOptions();
@@ -133,9 +176,6 @@ function showOptions(){
 			var index = options.indexOf(this.id);
 			if(index > -1) {
 				options.splice(index, 1);
-			}
-			if(options.length < alphabet.length){
-				$('#btnAdd').prop('disabled', false);
 			}
 			showOptions();
 		})

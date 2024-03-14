@@ -23,6 +23,7 @@
 					</div>
 					<div class="col">
 						<button type="button" class="btn btn-primary" id="btnAdd">+</button>
+						<button type="button" class="btn btn-primary" id="btnImport">Import</button>
 					</div>
 				</div>
 				<br/>
@@ -46,6 +47,23 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" id="btnModalCancel">Cancel</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal" tabindex="-1" role="dialog" id="import" data-show="false" data-keyboard="false">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">Import List of Items</h5>
+						</div>
+						<div class="modal-body">
+							<p>Import a list of items with one item per line.</p>
+							<textarea placeholder="items for import" id="itemsInput" style="width:100%;"></textarea>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" id="btnModalImport">Import</button>
+							<button type="button" class="btn btn-secondary" id="btnModalCancelImport">Cancel</button>
 						</div>
 					</div>
 				</div>
