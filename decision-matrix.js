@@ -139,23 +139,23 @@ function showOptions(){
 				if(choiceIndex > -1){
 					var choice = rankedList[choiceIndex];
 					var displayLetter = alphabet[options.indexOf(choice.chosen)];
-					matrix += '<td chosen="' + choice.chosen + '" notChosen="' + choice.notChosen + '" class="choice">';
+					matrix += '<td chosen="' + choice.chosen + '" notChosen="' + choice.notChosen + '" class="choice borderAll">';
 					matrix += displayLetter;
 					matrix += '</td>';
 				}
 				else{
-					matrix += '<td></td>';
+					matrix += '<td class="borderAll"></td>';
 				}
 				
 			}
 			matrix += '<td class="alpha">' + alpha + '</td>';
-			matrix += '<td colspan="' + span + '">' + task + '&nbsp;';
+			matrix += '<td colspan="' + span + '">' + task + '&nbsp;&nbsp;';
 			matrix += '<button type="button" class="btn btn-danger btn-small remove" id="' + task + '">X</button>';
 			matrix += '</td>';
 			matrix += '</tr>';
 
-			finalRowHeader += '<td class="alpha">' + alpha + '</td>';
-			finalRow += '<td id="' + alpha + 'Total">';
+			finalRowHeader += '<td class="totalAlpha">' + alpha + '</td>';
+			finalRow += '<td id="' + alpha + 'Total" class="total">';
 			if(rankedList.length > 0){
 				var choiceCount = rankedList.filter(x => x.chosen == task).length;
 				finalRow += choiceCount;
@@ -165,7 +165,7 @@ function showOptions(){
 		}
 
 		matrix += '<tr>' + finalRowHeader + '<td></td></tr>';
-		matrix += '<tr>' + finalRow + '<td class="alpha">Totals</td></tr>';
+		matrix += '<tr>' + finalRow + '<td class="rank" style="border-left: 1px solid black">Totals</td></tr>';
 		matrix += '</table>';
 
 		$('#matrix').html(matrix).trigger('create');
@@ -305,7 +305,7 @@ function showResults(rankCounts){
 
 	for(var s = 0; s < sortArray.length; s++){
 		results += '<tr>';
-		results += '<td class="alpha">' + (s + 1) + '</td>';
+		results += '<td class="rank">' + (s + 1) + '</td>';
 		results += '<td>' + sortArray[s].option + '</td>';
 		results += '</tr>';
 	}

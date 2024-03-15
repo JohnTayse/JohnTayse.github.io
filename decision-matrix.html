@@ -8,12 +8,10 @@
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 		<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 		<script type="text/javascript" src="decision-matrix.js"></script>
+		<link href="decision-matrix.css" rel="stylesheet">
 	</head>
-	<style>
-		.alpha {color: red}
-	</style>
 	<body>
-		<div class="container">
+		<main role="main" class="container">
 			<h2>Decision Matrix</h2>
 			<em>Simplify and sort!</em>
 			<div id="inputs" class="form-group">
@@ -68,6 +66,14 @@
 					</div>
 				</div>
 			</div>
+		</main>
+		<footer class="footer">
+		<div class="container">
+			<span class="text-muted">©2024-<span id="currentyear"></span> - John Tayse</span>
 		</div>
+		</footer>
 	</body>
+	<script>
+		$('#currentyear').html(new Date().getFullYear());
+	</script>
 </html>
