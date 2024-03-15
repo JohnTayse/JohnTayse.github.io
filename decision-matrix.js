@@ -225,7 +225,7 @@ function compare(option1Index, option2Index){
 	compare += '<button type="button" class="btn btn-light" id="option2" index="' + option2Index + '">' + options[option2Index] + '</button>';
 	compare += '?';
 
-	$('.modal-body').html(compare).trigger('create');
+	$('#compare .modal-body').html(compare).trigger('create');
 	$('#compare').modal('show');
 
 	$('#option1').click(function(){
@@ -248,6 +248,7 @@ function makeChoice(chosenIndex, notChosenIndex){
 	var maxChoice = Math.max(chosenIndex, notChosenIndex);
 
 	if(maxChoice == options.length - 1 && minChoice == maxChoice - 1){
+		$('#compare .modal-body').html('').trigger('create');
 		$('#compare').modal('hide');
 		showOptions();
 	}
