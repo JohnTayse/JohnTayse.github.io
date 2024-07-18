@@ -14,51 +14,137 @@
 	<main role="main" class="container">
 		<h2>Scaler</h2>
 		<em>Scale any measurement!</em>
+		<br/><br/>
+
 		<form id="scaleParameters">
-			<label>
-				<span>Units</span>
-			</label>
-				<Input type="radio" name="units" value="imperial" checked>&nbsp;Imperial
-				<Input type="radio" name="units" value="metric">&nbsp;Metric
-			<br/><br/>
-			<div class="form-group">
-				<label>
+			<div class="form-group row">
+				<div class="col-md-auto">
+					<label>
+						<h3>Units</h3>
+					</label>
+					<br/>
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="units" value="imperial" checked>
+						<label class="form-check-label" for="units">
+							Imperial
+						</label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="units" value="metric">
+						<label class="form-check-label" for="units">
+							Metric
+						</label>
+					</div>
+				</div>
+			</div>
+			<br/>
+
+			<div class="form-group row">
+				<label class="col">
 					<span>From Scale</span>
 				</label>
-				<select class="scaleSelect" id="fromScale" style="width:30%"></select>
-				<button type="button" class="btn btn-secondary" id="fromFavorite">&#9734</button>
+				<div class="col">
+					<select class="scaleSelect form-select" id="fromScale"></select>
+				</div>
+				<div class="col">
+					<button type="button" class="btn btn-secondary" id="fromFavorite">&#9734</button>
+				</div>
+				<div class="col"></div>
 			</div>
-			<div id="fromCustom" style="display: none;">
-				<label>
-					<span>Custom</span>
-					1:&nbsp;<input type="number"  id="fromCustomScale"  value="1">
-				</label>
-			</div>
-			<br/>
-			<span>Measurement</span>
-			<div id="imperialInputs">
-				<span>Feet</span>
-				<input type="number"  id="feet"  value=""><br/>
-				<span>Inches</span>
-				<input type="number"  id="inches"  value="">
-			</div>
-			<div id="metricInputs" style="display: none;">
-				<span>Meters</span>
-				<input type="number"  id="meters"  value=""><br/>
-				<span>Millimeters</span>
-				<input type="number"  id="millimeters"  value="">
+			<div id="fromCustom" style="display: none;" class="row">
+				<div class="col"></div>
+				<div class="col">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Custom 1:</span>
+						</div>
+						<input type="number" id="fromCustomScale" class="form-control"  value="1">
+					</div>
+				</div>
+				<div class="col"></div>
+				<div class="col"></div>
 			</div>
 			<br/>
-			<div class="form-group">
-				<label>
+
+			<div class="form-group row">
+				<label class="col">
 					<span>To Scale</span>
 				</label>
-				<select class="scaleSelect" id="toScale" style="width:30%"></select>
-				<button type="button" class="btn btn-secondary" id="toFavorite">&#9734</button>
+				<div class="col">
+					<select class="scaleSelect form-select" id="toScale"></select>
+				</div>
+				<div class="col">
+					<button type="button" class="btn btn-secondary" id="toFavorite">&#9734</button>
+				</div>
+				<div class="col"></div>
 			</div>
-			<span>Scaled Measurement</span>
-			<p id="resultImperial">0 in</p>
-			<p id="resultMetric">0 mm</p>
+			<div id="toCustom" style="display: none;" class="row">
+				<div class="col"></div>
+				<div class="col">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Custom 1:</span>
+						</div>
+						<input type="number" id="toCustomScale" class="form-control"  value="1">
+					</div>
+				</div>
+				<div class="col"></div>
+				<div class="col"></div>
+			</div>
+			<br/>
+
+			<div>
+				<button type="button" class="btn btn-secondary" id="btnSwap">Swap</button>
+			</div>
+			<br/>
+
+			<h3>Measurement</h3>
+			<div id="imperialInputs" class="row">
+				<div class="col">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Feet</span>
+						</div>
+						<input type="number" id="feet" class="form-control"  value="">
+					</div>
+					<br/>
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Inches</span>
+						</div>
+						<input type="number" id="inches" class="form-control"  value="">
+					</div>
+				</div>
+				<div class="col"></div>
+			</div>
+			<div id="metricInputs" class="row" style="display: none;">
+				<div class="col">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Meters</span>
+						</div>
+						<input type="number" id="meters" class="form-control"  value="">
+					</div>
+					<br/>
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Millimeters</span>
+						</div>
+						<input type="number" id="millimeters" class="form-control"  value="">
+					</div>
+				</div>
+				<div class="col"></div>
+			</div>
+			<br/>
+			
+			<h3>Scaled Measurement</h3>
+			<div class="row">
+				<div class="col">
+					<p id="resultImperial">0 in</p>
+					<p id="resultMetric">0 mm</p>
+				</div>
+			</div>
+			
 			<button type="button" class="btn btn-secondary" id="clear">Clear</button>
 		</form>
 	</main>

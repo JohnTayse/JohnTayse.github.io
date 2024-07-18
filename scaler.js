@@ -42,36 +42,17 @@ $(document).ready(function(){
 	})
 
 	$('.scaleSelect').change(function(){
+		scaleChange();
+	})
+
+	$('#btnSwap').click(function(){
 		var fromScale = $('#fromScale').val();
 		var toScale = $('#toScale').val();
-		
-		if(fromScale === "custom"){
-			$('#fromCustom').show();
-		}
-		else {
-			$('#fromCustom').hide();
-		}
-		if(toScale === "custom"){
-			$('#toCustom').show();
-		}
-		else {
-			$('#toCustom').hide();
-		}
 
-		if(fromScale == fromFavoriteScale){
-			$('#fromFavorite').html('&#9733');
-		}
-		else {
-			$('#fromFavorite').html('&#9734');
-		}
-		if(toScale == toFavoriteScale){
-			$('#toFavorite').html('&#9733');
-		}
-		else {
-			$('#toFavorite').html('&#9734');
-		}
+		$('#fromScale').val(toScale);
+		$('#toScale').val(fromScale);
 
-		calculate();
+		scaleChange();
 	})
 
 	$('#fromFavorite').click(function(){
@@ -209,8 +190,8 @@ function calculate(){
 		}
 	}
 	else if(units === "metric"){
-		var millimeters = $('#millimeters').val();
-		var metersInMm = $('#meters').val() * 1000;
+		var millimeters = Number($('#millimeters').val());
+		var metersInMm = Number($('#meters').val() * 1000);
 		millimeters += metersInMm;
 
 		var value = (millimeters * (fromScale / toScale)).toFixed(3);
@@ -236,4 +217,37 @@ function calculate(){
 
 	$('#resultImperial').text(resultImperial);
 	$('#resultMetric').text(resultMetric);
+}
+
+function scaleChange(){
+	var fromScale = $('#fromScale').val();
+	var toScale = $('#toScale').val();
+	
+	if(fromScale === "custom"){
+		$('#fromCustom').show();
+	}
+	else {
+		$('#fromCustom').hide();
+	}
+	if(toScale === "custom"){
+		$('#toCustom').show();
+	}
+	else {
+		$('#toCustom').hide();
+	}
+
+	if(fromScale == fromFavoriteScale){
+		$('#fromFavorite').html('&#9733');
+	}
+	else {
+		$('#fromFavorite').html('&#9734');
+	}
+	if(toScale == toFavoriteScale){
+		$('#toFavorite').html('&#9733');
+	}
+	else {
+		$('#toFavorite').html('&#9734');
+	}
+
+	calculate();
 }
