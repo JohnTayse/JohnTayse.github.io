@@ -2,6 +2,8 @@
 
 - Rail Ops: https://johntayse.github.io/RailOps/
 
+- Calculator: https://johntayse.github.io/calculator/
+
 - Slide Ruler: https://johntayse.github.io/SlideRuler/
 
 - Decision Matrix: https://johntayse.github.io/decision-matrix.html

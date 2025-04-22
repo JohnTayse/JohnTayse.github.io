@@ -1,0 +1,30 @@
+body {
+	background-color: #000 !important;
+}
+.field {
+	font-size: xxx-large;
+	text-align: right;
+}
+#formula {
+	font-size: xxx-large;
+	color: #fff;
+	background-color: #000;
+	border-color: #000;
+}
+#result {
+	color: #aaa;
+}
+#fractional {
+	color: #999;
+}
+.col {
+	padding-left: 2px !important;
+	padding-right: 2px !important;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.btn {
+	font-size: xx-large !important;
+	padding-top: 25px !important;
+	padding-bottom: 25px !important;
+}
