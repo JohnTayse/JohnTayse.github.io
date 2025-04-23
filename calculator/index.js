@@ -1,7 +1,5 @@
 var hasCalculated = false;
 
-var history = [];
-
 const numbers = {
 	'one': 1,
 	'two': 2,
@@ -25,51 +23,59 @@ const operators = {
 }
 
 $(document).ready(function(){
+	$('#historyDiv').toggle(false);
+	loadHistory();
+
 	$('.btn').click(function(){
 		var id = this.id;
-		if(numbers[id] !== undefined && hasCalculated){
-			hasCalculated = false;
-			clearResults();
-			$('#formula').val(numbers[id]);
+		if(id == 'historyBtn'){
+			$('#historyDiv').toggle();
 		}
-		else if(numbers[id] !== undefined && !hasCalculated){
-			var formula = $('#formula').val();
-			$('#formula').val(formula += numbers[id]);
-		}
-		else if(operators[id] !== undefined && hasCalculated){
-			hasCalculated = false;
-			var formula = $('#result').html();
-			clearResults();
-			$('#formula').val(formula += operators[id]);
-		}
-		else if(operators[id] !== undefined && !hasCalculated){
-			var formula = $('#formula').val();
-			$('#formula').val(formula += operators[id]);
-		}
-		else if(id == 'equals'){
-			hasCalculated = true;
-			performCalculations($('#formula').val());
-		}
-		else if(id == 'clear'){
-			$('#formula').val('');
-			clearResults();
-		}
-		else if(id == 'backspace'){
-			hasCalculated = false;
-			clearResults();
-			$('#formula').val($('#formula').val().slice(0, -1));
-		}
-		else if(id == 'parentheses'){
-			var formula = $('#formula').val();
-			$('#formula').val(formula += nextParenthesisShouldBeOpen(formula));
-		}
-		else if(id == 'history'){
-			
+		else{
+			loadHistory();
+			$('#historyDiv').toggle(false);
+			if(numbers[id] !== undefined && hasCalculated){
+				hasCalculated = false;
+				clearResults();
+				$('#formula').val(numbers[id]);
+			}
+			else if(numbers[id] !== undefined && !hasCalculated){
+				var formula = $('#formula').val();
+				$('#formula').val(formula += numbers[id]);
+			}
+			else if(operators[id] !== undefined && hasCalculated){
+				hasCalculated = false;
+				var formula = $('#result').html();
+				clearResults();
+				$('#formula').val(formula += operators[id]);
+			}
+			else if(operators[id] !== undefined && !hasCalculated){
+				var formula = $('#formula').val();
+				$('#formula').val(formula += operators[id]);
+			}
+			else if(id == 'equals'){
+				hasCalculated = true;
+				performCalculations($('#formula').val());
+			}
+			else if(id == 'clear'){
+				$('#formula').val('');
+				clearResults();
+			}
+			else if(id == 'backspace'){
+				hasCalculated = false;
+				clearResults();
+				$('#formula').val($('#formula').val().slice(0, -1));
+			}
+			else if(id == 'parentheses'){
+				var formula = $('#formula').val();
+				$('#formula').val(formula += nextParenthesisShouldBeOpen(formula));
+			}
 		}
 	})
 });
 
 function performCalculations(str){
+	loadHistory();
 	var result = math.evaluate(str);
 	var fractional = math.fraction(result);
 	if(fractional.d != 1){
@@ -80,6 +86,81 @@ function performCalculations(str){
 	else{
 		$('#result').html(result);
 		$('#fractional').html('&nbsp;')
+	}
+
+	var timestamp = new Date();
+	var save = {
+		"date" : timestamp.toLocaleDateString(),
+		"time": timestamp.toLocaleTimeString(),
+		"formula" : str,
+		"result": result,
+	}
+	saveHistory(save);
+}
+
+function displayHistory(historical){
+	var histDiv = '';
+	var lastDate = '';
+
+	$.each(historical, function(index, value){
+		
+		if(value.date != lastDate){
+			lastDate = value.date;
+			histDiv += '<hr>'
+			histDiv += '<span class="dateHeader">' + lastDate + '</span><br/>';
+		}
+		else{
+			histDiv += '<br/>'
+		}
+		histDiv += '<p class="histFormula">' + value.formula + '</p>';
+		histDiv += '<p class="histResult">' + value.result + '</p>';
+	})
+
+	histDiv += '<br/><br/>'
+	histDiv += '<button type="button" id="clearHistoryBtn" class="btn btn-light">Clear History</button>'
+
+	$('#historyDiv').html(histDiv).trigger('create');
+
+	$('#clearHistoryBtn').click(function(){
+		if(confirm('Are you sure you want to clear your calculation history? This cannot be undone.')){
+			localStorage.setItem("history", JSON.stringify({}));
+			$('#historyDiv').html('').trigger('create');
+			loadHistory();
+		}
+		$('#historyDiv').toggle(true);	
+	})
+
+	$('#historyDiv').toggle(true);
+	$('#historyDiv').scrollTop($("#historyDiv")[0].scrollHeight);
+	$('#historyDiv').toggle(false);
+}
+
+function saveHistory(save){
+	if(typeof(Storage) !== undefined){
+		var local = localStorage.getItem("history");
+		if(local !== null){
+			var history = JSON.parse(local);
+			var nextPlace = (ObjectLength(history) + 1) + "";
+			history[nextPlace] = save;
+			localStorage.setItem("history", JSON.stringify(history));
+		}
+		else{
+			var history = { "1": save };
+			localStorage.setItem("history", JSON.stringify(history));
+		}
+	}
+}
+
+function loadHistory(){
+	if(typeof(Storage) !== undefined){
+		var local = localStorage.getItem("history");
+		if(local !== null){
+			var history = JSON.parse(local);
+
+			if(history["1"] !== undefined){
+				displayHistory(history);
+			}
+		}
 	}
 }
 
@@ -125,3 +206,13 @@ function formatMixedFraction(fractionObj) {
 
 	return `${whole} ${remainderStr}`;
 }
+
+function ObjectLength(object) {
+	var length = 0;
+	for (var key in object) {
+		if (object.hasOwnProperty(key)) {
+			++length;
+		}
+	}
+	return length;
+};
