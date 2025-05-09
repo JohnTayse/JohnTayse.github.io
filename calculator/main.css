@@ -1,3 +1,6 @@
+* {
+	touch-action: manipulation;
+}
 body {
 	background-color: #000 !important;
 }
