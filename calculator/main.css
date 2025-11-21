@@ -3,6 +3,24 @@
 }
 body {
 	background-color: #000 !important;
+	height: 100vh;
+	margin: 0;
+}
+.container {
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+}
+.row:has(#formula) {
+	flex-grow: 1;
+	display: flex;
+	align-items: flex-end;
+}
+.row:has(#results) {
+	flex-grow: 1;
+	display: flex;
+	align-items: flex-start;
 }
 hr {
 	border-color: #fff !important;
@@ -49,6 +67,10 @@ hr {
 	color: #fff;
 	background-color: #000;
 	border-color: #000;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+	word-break: break-all;
+	resize: none;
 }
 #result {
 	color: #aaa;
