@@ -23,6 +23,12 @@ const operators = {
 }
 
 $(document).ready(function(){
+	// Configure math.js to use higher precision
+	math.config({
+		number: 'BigNumber',
+		precision: 64
+	});
+	
 	$('#historyDiv').toggle(false);
 	loadHistory();
 
@@ -77,14 +83,18 @@ $(document).ready(function(){
 function performCalculations(str){
 	loadHistory();
 	var result = math.evaluate(str);
-	var fractional = math.fraction(result);
+	
+	// Convert BigNumber to regular number for display
+	var resultNum = math.number(result);
+	
+	var fractional = math.fraction(resultNum);
 	if(fractional.d != 1){
 		var fraction = formatMixedFraction(fractional);
-		$('#result').html(result);
+		$('#result').html(resultNum);
 		$('#fractional').html(' [' + fraction + ']');
 	}
 	else{
-		$('#result').html(result);
+		$('#result').html(resultNum);
 		$('#fractional').html('&nbsp;')
 	}
 
@@ -93,7 +103,7 @@ function performCalculations(str){
 		"date" : timestamp.toLocaleDateString(),
 		"time": timestamp.toLocaleTimeString(),
 		"formula" : str,
-		"result": result,
+		"result": resultNum,
 	}
 	saveHistory(save);
 }
