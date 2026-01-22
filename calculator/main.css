@@ -35,6 +35,9 @@ hr {
 	padding-top: 2px;
 	padding-bottom: 2px;
 }
+#app{
+	padding-bottom: 2em;
+}
 #clearHistoryBtn{
 	font-size: large !important;
 	padding-top: 0px !important;
