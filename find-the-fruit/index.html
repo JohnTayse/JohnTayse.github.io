@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vivacity Squares - Find the Fruit</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍎</text></svg>" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="game-container">
+	<header>
+	  <h1>🍏 Vivacity Squares 🍏</h1>
+	  <p class="tagline">A game of chance! Find the fruit, get the loot!</p>
+	</header>
+
+	<section class="stats-bar">
+	  <div class="stat">
+		<span class="stat-label">Chances Left</span>
+		<span class="stat-value" id="chances-value">0</span>
+	  </div>
+	  <div class="stat">
+		<span class="stat-label">Fruits Found</span>
+		<span class="stat-value" id="score-value">0</span>
+	  </div>
+	</section>
+
+	<div class="board" id="board"></div>
+
+	<div class="fact-box" id="fact-box"></div>
+
+	<div class="message" id="message"></div>
+  </div>
+
+  <button id="reset-button" aria-hidden="true" tabindex="-1" title="Reset"></button>
+  <script src="script.js"></script>
+</body>
+</html>
